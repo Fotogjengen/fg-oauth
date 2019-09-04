@@ -1,2 +1,3 @@
-# fg-oauth
-Hilfling - OAuth
+# Hilfling - OAuth
+
+OAuth server for Fotogjengen
