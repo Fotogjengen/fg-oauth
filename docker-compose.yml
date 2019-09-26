@@ -6,5 +6,4 @@ services:
       dockerfile: Dockerfile
     restart: always
     container_name: hilfling-auth
-    ports:
-      - "8080:8080"
+

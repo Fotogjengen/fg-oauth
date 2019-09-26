@@ -11,7 +11,7 @@ func main() {
 	r.LoadHTMLGlob("templates/*") // Load templates
 
 	// Setup route group for API
-	api := r.Group("/api")
+	api := r.Group("/")
 	api.GET("/", handlers.GetRoot) // Get root structure with links to all paths
 
 	if err := r.Run(":8080"); err != nil { // Run on port 8080

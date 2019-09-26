@@ -6,8 +6,8 @@ services:
       - traefik
     labels:
       - traefik.port = 8080
-      - traefik.http.routers.intern-nginx.rule=Host("fg-auth.carosa.no")
-      - traefik.http.routers.registry.service=hilfling-auth
+      - traefik.http.routers.auth-api.rule=Host("auth.fg.carosa.no")
+      - traefik.http.routers.registry.service=auth-api
 
 networks: 
   traefik:
