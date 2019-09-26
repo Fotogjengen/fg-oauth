@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  hilfling-auth:
+    networks:
+      - traefik
+    labels:
+      - traefik.port = 8080
+      - traefik.http.routers.intern-nginx.rule=Host("fg-auth.carosa.no")
+      - traefik.http.routers.registry.service=hilfling-auth
+
+networks: 
+  traefik:
+    external: true
+
