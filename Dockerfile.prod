@@ -1,0 +1,12 @@
+FROM golang:1.13-alpine as base
+
+# The latest alpine images don't have some tools like (`git` and `bash`).
+# Adding git, bash and openssh to the image
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+
+# Add Maintainer Info
+LABEL maintainer="FG Web (fg-web@samfundet.no)"
+
+WORKDIR /home/hilfling-auth/src
+

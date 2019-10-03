@@ -4,6 +4,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     container_name: hilfling-auth
+    environment: 
+      DEBUG: "true"
+      SERVING_PORT: ":8080"
+    volumes: 
+      - .:/home/hilfling-auth
+    working_dir: /home/hilfling-auth/src
+    ports:
+      - "8080:8080"
+    command: bash -c "go mod download && make build"
 

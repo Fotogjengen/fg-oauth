@@ -1,4 +1,4 @@
-FROM golang:1.13-alpine
+FROM golang:1.13-alpine as base
 
 # The latest alpine images don't have some tools like (`git` and `bash`).
 # Adding git, bash and openssh to the image
@@ -8,24 +8,19 @@ RUN apk update && apk upgrade && \
 # Add Maintainer Info
 LABEL maintainer="FG Web (fg-web@samfundet.no)"
 
-WORKDIR /
+WORKDIR /home/hilfling-auth
 
-# Copy go mod and sum files
-COPY go.mod go.sum ./
 
-# Download all dependancies. Dependencies will be cached if the go.mod and go.sum files are not changed
-RUN go mod download
+FROM base as dev
+RUN apk add --no-cache autoconf automake libtool gettext gettext-dev make g++ texinfo curl
+WORKDIR /root
+RUN wget https://github.com/emcrisostomo/fswatch/releases/download/1.14.0/fswatch-1.14.0.tar.gz
+RUN tar -xvzf fswatch-1.14.0.tar.gz
+WORKDIR /root/fswatch-1.14.0
+RUN ./configure
+RUN make
+RUN make install
 
-# Copy the source from the current directory to the Working Directory inside the container
-COPY . .
-
-# Build the Go app
-RUN go build -o main .
-
-# Expose port 8080 to the outside world
-EXPOSE 8080
-
-# Run the executable
-CMD ["./main"]
+WORKDIR /home/hilfling-auth/src
 
 
