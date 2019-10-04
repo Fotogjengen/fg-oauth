@@ -1,3 +1,5 @@
+# Makefile used for golang hot reloading in dev environment
+
 # Variable to store project name
 PROJECT_NAME = "hilfling-oauth"
 
@@ -5,7 +7,7 @@ PROJECT_NAME = "hilfling-oauth"
 PID_FILE = /tmp/hilfling-oauth.pid
 
 # We can use such syntax to get main.go and other root Go files.
-GO_FILES = $(wildcard src/*.go)
+GO_FILES = $(wildcard *.go)
 
 # Start task performs "go run main.go" and writes its process id to PID_FILE
 start:
@@ -31,9 +33,6 @@ restart: stop before start
 serve: start
 	fswatch -or --event=Updated . | xargs -n1 -I {} make restart
 
-build: 
-	go build -o ./main && ./main
-
 # .PHONY is used for reserving tasks words
-.PHONY: start stop before serve restart build
+.PHONY: start stop before serve restart
 

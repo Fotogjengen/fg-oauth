@@ -13,7 +13,7 @@ services:
       - "7070:7070"
     volumes: 
       - .:/home/hilfling-oauth
-    working_dir: /home/hilfling-oauth
+    working_dir: /home/hilfling-oauth/src
     command: bash -c "go mod download && make serve"
   prod:
     build:
@@ -21,6 +21,10 @@ services:
       dockerfile: Dockerfile.prod
     restart: always
     container_name: hilfling-auth-prod
+    working_dir: /home/hilfling-oauth
+    environment: 
+      GIN_MODE: "release"
+      SERVING_PORT: "*:7070"
     ports:
       - "7070:7070"
     networks:

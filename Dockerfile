@@ -17,7 +17,7 @@ RUN ./configure
 RUN make
 RUN make install
 
-WORKDIR /home/hilfling-oauth
+WORKDIR /home/hilfling-oauth/src
 
 
 
