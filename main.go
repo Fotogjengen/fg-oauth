@@ -14,7 +14,7 @@ func main() {
 	api := r.Group("/")
 	api.GET("/", handlers.GetRoot) // Get root structure with links to all paths
 
-	if err := r.Run(":8080"); err != nil { // Run on port 8080
+	if err := r.Run(":7070"); err != nil {
 		panic(err)
 	}
 

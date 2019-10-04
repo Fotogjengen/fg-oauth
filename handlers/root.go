@@ -16,6 +16,10 @@ var paths = []path{
 		Name: "Test",
 		Path: "test",
 	},
+	{
+		Name: "Test2",
+		Path: "Test2",
+	},
 }
 
 func GetRoot(ctx *gin.Context) {

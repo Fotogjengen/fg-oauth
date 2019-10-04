@@ -1,9 +1,38 @@
 version: "3"
 services:
-  hilfling-auth:
+  dev:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
-    container_name: hilfling-auth
+    container_name: hilfling-auth-dev
+    environment: 
+      DEBUG: "true"
+      SERVING_PORT: ":7070"
+    ports: 
+      - "7070:7070"
+    volumes: 
+      - .:/home/hilfling-oauth
+    working_dir: /home/hilfling-oauth
+    command: bash -c "go mod download && make serve"
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    container_name: hilfling-auth-prod
+    ports:
+      - "7070:7070"
+    networks:
+      - traefik
+    labels:
+      - traefik.port = 8080
+      - traefik.http.routers.auth-api.rule=Host("auth.fg.carosa.no")
+      - traefik.http.routers.registry.service=auth-api
+
+networks: 
+  traefik:
+    external: true
+
+
 
