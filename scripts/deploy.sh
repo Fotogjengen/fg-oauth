@@ -4,6 +4,6 @@ ssh -i ./id_rsa hilfling@$SERVER_IP_ADDRESS '
 cd /var/www/hilfling-oauth &&
 git fetch --all && 
 git reset --hard origin/master &&
-docker-compose -f docker-compose.prod.yml -d --build &&
+docker-compose up -d --build &&
 echo "DONE"
 '
