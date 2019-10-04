@@ -1,33 +1,30 @@
-CREATE DATABASE fgusers;
- \c fgusers;
-
+ \c authdb;
 
 CREATE TABLE IF NOT EXISTS security_level (
   id serial PRIMARY KEY,
-  level_name text NOT NULL,
-  level integer NOT NULL,
+  level text NOT NULL,
 
-  UNIQUE(level_name)
+  UNIQUE(level)
 );
 
 CREATE TABLE IF NOT EXISTS position (
   id serial PRIMARY KEY,
-  name text NOT NULL,
+  name text NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS fg_user (
   id serial PRIMARY KEY,
   username text NOT NULL,
   full_name text NOT NULL,
   password_hash text NOT NULL,
   password_salt text NOT NULL,
-  security_level_id integer NOT NULL REFERENCES security_level(id), 
-  
-  is_disabled boolean NOT NULL,
+  security_level_id integer NOT NULL REFERENCES security_level(id),  
+  is_disabled boolean NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS user_position (
-  user_id integer NOT NULL REFERENCES user(id),
+  fg_user_id integer NOT NULL REFERENCES fg_user(id),
   position_id integer NOT NULL REFERENCES position(id),
-  PRIMARY KEY (user_id, position_id)
+  PRIMARY KEY (fg_user_id, position_id)
 );
+

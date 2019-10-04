@@ -13,12 +13,8 @@ type path struct {
 
 var paths = []path{
 	{
-		Name: "Test",
-		Path: "path",
-	},
-	{
-		Name: "Test2",
-		Path: "Path2",
+		Name: "Security Levels",
+		Path: "security_levels",
 	},
 }
 
