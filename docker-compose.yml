@@ -13,7 +13,7 @@ services:
     ports:
       - "5432:5432"
     labels: 
-      - trafik.enable = false
+      - traefik.enable = false
     networks: 
       - db
     environment: 
@@ -46,14 +46,13 @@ services:
     working_dir: /home/hilfling-oauth
     environment: 
       GIN_MODE: "release"
-      SERVING_PORT: "*:7070"
     networks:
       - traefik
       - db
-    ports: 
-      - "7070:7070"
+    expose: 
+      - "7070"
     labels:
-      - traefik.port = 8080
+      - traefik.port = 7070
       - traefik.http.routers.auth-api.rule=Host("auth.fg.carosa.no")
       - traefik.http.routers.registry.service=auth-api
 
