@@ -14,17 +14,16 @@ CREATE TABLE IF NOT EXISTS position (
 
 CREATE TABLE IF NOT EXISTS fg_user (
   id serial PRIMARY KEY,
-  username text NOT NULL,
+  username text NOT NULL UNIQUE,
   full_name text NOT NULL,
   password_hash text NOT NULL,
-  password_salt text NOT NULL,
   security_level_id integer NOT NULL REFERENCES security_level(id),  
-  is_disabled boolean NOT NULL
+  is_disabled boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS user_position (
+  id serial PRIMARY KEY,
   fg_user_id integer NOT NULL REFERENCES fg_user(id),
-  position_id integer NOT NULL REFERENCES position(id),
-  PRIMARY KEY (fg_user_id, position_id)
+  position_id integer NOT NULL REFERENCES position(id)
 );
 
