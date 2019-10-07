@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-PG_CONTAINER="pg-dev"
+PG_CONTAINER="pg-prod"
 
 if docker-compose up -d --build ${PG_CONTAINER}; then
-  ./postgres/migrate.dev.bash
+  ./postgres/migrate.prod.bash
   docker-compose up -d --build prod
 fi
 

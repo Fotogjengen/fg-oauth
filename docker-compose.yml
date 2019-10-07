@@ -2,7 +2,7 @@ version: "3"
 
 services:
   pg-dev:
-    container_name: pg-dev
+    container_name: pg-auth
     build:
       context: .
       dockerfile: postgres/Dockerfile
@@ -16,6 +16,24 @@ services:
       - traefik.enable = false
     networks: 
       - db
+    environment: 
+      POSTGRES_DB: authdb
+  
+  pg-prod:
+    container_name: pg-auth
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
+    restart: always
+    volumes: 
+      - "db-data:/var/lib/postgresql/data"
+      - "./postgres/sql:/postgres/sql"
+    ports:
+      - "5432:5432"
+    labels: 
+      - traefik.enable = false
+    networks: 
+      - traefik
     environment: 
       POSTGRES_DB: authdb
 
@@ -48,7 +66,6 @@ services:
       GIN_MODE: "release"
     networks:
       - traefik
-      - db
     expose: 
       - "7070"
     labels:
