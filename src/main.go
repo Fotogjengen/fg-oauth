@@ -13,9 +13,14 @@ func main() {
 	r.LoadHTMLGlob("templates/*") // Load templates
 
 	// Setup route group for API
-	api := r.Group("/")
+	api := r.Group("/api")
 	api.GET("/", handlers.GetRoot) // Get root structure with links to all paths
 	api.GET("/security_levels", handlers.GetSecurityLevels)
+	api.GET("/positions", handlers.GetPositions)
+	api.GET("/users", handlers.GetUsers)
+
+	auth := r.Group("auth")
+	auth.POST("/signup", handlers.Signup)
 
 	database.Connect()
 	if err := database.DB.Ping(); err != nil {

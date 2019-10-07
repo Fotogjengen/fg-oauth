@@ -16,6 +16,14 @@ var paths = []path{
 		Name: "Security Levels",
 		Path: "security_levels",
 	},
+	{
+		Name: "Postions",
+		Path: "positions",
+	},
+	{
+		Name: "Users",
+		Path: "users",
+	},
 }
 
 func GetRoot(ctx *gin.Context) {

@@ -7,15 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type SecurityLevel struct {
+type securityLevel struct {
 	Id    int    `json:"id" binding:"required"`
 	Level string `json:"level" binding:"required"`
 }
 
-func getSecurityLevels() ([]SecurityLevel, error) {
+func getSecurityLevels() ([]securityLevel, error) {
 	const q = `SELECT * FROM security_level;`
 	rows := database.Query(q)
-	results := make([]SecurityLevel, 0)
+	results := make([]securityLevel, 0)
 	for rows.Next() { // Loop through all DB rows
 		var id int
 		var level string
@@ -23,7 +23,7 @@ func getSecurityLevels() ([]SecurityLevel, error) {
 		if err != nil {
 			return nil, err
 		}
-		results = append(results, SecurityLevel{id, level})
+		results = append(results, securityLevel{id, level})
 	}
 	return results, nil
 }
