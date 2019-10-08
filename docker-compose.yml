@@ -10,8 +10,6 @@ services:
     volumes:
       - "db-data:/var/lib/postgresql/data"
       - "./postgres/sql:/postgres/sql"
-    ports:
-      - "5432:5432"
     labels:
       - traefik.enable = false
     environment:
@@ -26,8 +24,6 @@ services:
     environment:
       DEBUG: "true"
       SERVING_PORT: ":7070"
-    ports:
-      - "7070:7070"
     volumes:
       - .:/home/hilfling-oauth
     working_dir: /home/hilfling-oauth/src
