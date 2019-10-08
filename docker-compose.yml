@@ -31,8 +31,6 @@ services:
     volumes:
       - .:/home/hilfling-oauth
     working_dir: /home/hilfling-oauth/src
-    networks:
-      - db
     command: bash -c "go mod download && make serve"
 
 volumes:
