@@ -14,8 +14,6 @@ services:
       - "5432:5432"
     labels:
       - traefik.enable = false
-    networks:
-      - db
     environment:
       POSTGRES_DB: authdb
 
