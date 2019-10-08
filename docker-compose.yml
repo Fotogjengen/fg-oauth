@@ -1,84 +1,41 @@
 version: "3"
 
 services:
-  pg-dev:
-    container_name: pg-auth
+  auth-db:
+    container_name: auth-db
     build:
       context: .
       dockerfile: postgres/Dockerfile
     restart: always
-    volumes: 
+    volumes:
       - "db-data:/var/lib/postgresql/data"
       - "./postgres/sql:/postgres/sql"
     ports:
       - "5432:5432"
-    labels: 
+    labels:
       - traefik.enable = false
-    networks: 
+    networks:
       - db
-    environment: 
-      POSTGRES_DB: authdb
-  
-  pg-prod:
-    container_name: pg-auth
-    build:
-      context: .
-      dockerfile: postgres/Dockerfile
-    restart: always
-    volumes: 
-      - "db-data:/var/lib/postgresql/data"
-      - "./postgres/sql:/postgres/sql"
-    ports:
-      - "5432:5432"
-    labels: 
-      - traefik.enable = false
-    networks: 
-      - traefik
-    environment: 
+    environment:
       POSTGRES_DB: authdb
 
-  dev:
+  hilfling-auth:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
-    container_name: hilfling-auth-dev
-    environment: 
+    container_name: hilfling-auth
+    environment:
       DEBUG: "true"
       SERVING_PORT: ":7070"
-    ports: 
+    ports:
       - "7070:7070"
-    volumes: 
+    volumes:
       - .:/home/hilfling-oauth
     working_dir: /home/hilfling-oauth/src
-    networks: 
+    networks:
       - db
     command: bash -c "go mod download && make serve"
 
-  prod:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
-    restart: always
-    container_name: hilfling-auth-prod
-    working_dir: /home/hilfling-oauth
-    environment: 
-      GIN_MODE: "release"
-    networks:
-      - traefik
-    expose: 
-      - "7070"
-    labels:
-      - traefik.port = 7070
-      - traefik.http.routers.auth-api.rule=Host("auth.fg.carosa.no")
-      - traefik.http.routers.registry.service=auth-api
-
-networks:
-  db:
-    driver: bridge
-  traefik:
-    external: true
-
-
-volumes: 
+volumes:
   db-data:

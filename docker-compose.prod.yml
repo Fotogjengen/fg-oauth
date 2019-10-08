@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  pg-prod-db:
+    networks:
+      - traefik
+
+  hilfling-auth:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    environment:
+      GIN_MODE: "release"
+    networks:
+      - traefik
+    expose:
+      - "7070"
+    labels:
+      - traefik.port = 7070
+      - traefik.http.routers.auth-api.rule=Host("auth.fg.carosa.no")
+      - traefik.http.routers.registry.service=auth-api
+
+networks:
+  traefik:
+    external: true
