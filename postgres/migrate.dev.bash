@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CONTAINER="pg-auth"
+CONTAINER="auth-db"
 
 docker exec -it ${CONTAINER} psql -U postgres -c "DROP DATABASE IF EXISTS authdb"
 docker exec -it ${CONTAINER} psql -U postgres -c "CREATE DATABASE authdb"

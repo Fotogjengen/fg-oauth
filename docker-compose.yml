@@ -7,6 +7,8 @@ services:
       context: .
       dockerfile: postgres/Dockerfile
     restart: always
+    networks:
+      - traefik
     volumes:
       - "db-data:/var/lib/postgresql/data"
       - "./postgres/sql:/postgres/sql"
@@ -16,18 +18,26 @@ services:
       POSTGRES_DB: authdb
 
   hilfling-auth:
+    depends_on:
+      - auth-db
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
-    container_name: hilfling-auth
     environment:
       DEBUG: "true"
       SERVING_PORT: ":7070"
-    volumes:
-      - .:/home/hilfling-oauth
     working_dir: /home/hilfling-oauth/src
     command: bash -c "go mod download && make serve"
+    networks:
+      - traefik
+    restart: always
+    container_name: hilfling-auth
+    volumes:
+      - .:/home/hilfling-oauth
 
 volumes:
   db-data:
+
+networks:
+  traefik:
+    external: true
