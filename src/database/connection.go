@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	DBHOST = "pg-auth"
+	DBHOST = "authdb"
 	DBPORT = 5432
 	DBUSER = "postgres"
 	DBPASS = ""
